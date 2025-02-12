@@ -1,5 +1,3 @@
-
-
 from flask import Flask, jsonify, Response  # Import Response
 from flask_cors import CORS
 from pymongo import MongoClient
@@ -23,7 +21,10 @@ def get_movies():
     # Use json_util to serialize the data
     return Response(json.dumps(movies_list, default=json_util.default), mimetype='application/json')
 
+# Health check endpoint for Koyeb deployment
+@app.route('/health', methods=['GET'])
+def health_check():
+    return 'OK', 200
+
 if __name__ == '__main__':
-    app.run(debug=True)
-
-
+    app.run(host='0.0.0.0', port=8080, debug=True)
